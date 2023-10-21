@@ -12,22 +12,20 @@ class AddNoteButtonSheet extends StatelessWidget {
     // ignore: prefer_const_constructors
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: SingleChildScrollView(
-        child: BlocConsumer<AddNoteCubit, AddNoteState>(
-          listener: (context, state) {
-            if (state is AddNoteFailure) {
-              print('failed ${state.errorMassage}');
-            }
-            if (state is AddNoteSuccess) {
-              Navigator.pop(context);
-            }
-          },
-          builder: (context, state) {
-            return ModalProgressHUD(
-                inAsyncCall: state is AddNoteLoading ? true : false,
-                child: const AddNoteForm());
-          },
-        ),
+      child: BlocConsumer<AddNoteCubit, AddNoteState>(
+        listener: (context, state) {
+          if (state is AddNoteFailure) {
+            print('failed ${state.errorMassage}');
+          }
+          if (state is AddNoteSuccess) {
+            Navigator.pop(context);
+          }
+        },
+        builder: (context, state) {
+          return ModalProgressHUD(
+              inAsyncCall: state is AddNoteLoading ? true : false,
+              child: const SingleChildScrollView(child: AddNoteForm()));
+        },
       ),
     );
   }
